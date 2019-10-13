@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     HandCounterSurfaceView vw;
     PowerManager.WakeLock wakeLock;
     public static Vibrator vibrator;
-    public static int vibrateTime = 25;
+    public static int vibrateTime = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Init_Layout();
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MainActivity");
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MainActivity:tag");
         wakeLock.acquire();
 
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
@@ -65,35 +65,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void toast(String message) {
+        if (adView == null) return;
+        Toast.makeText(adView.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     void initAdFit(){
         // AdFit 광고 뷰 생성 및 설정
         adView = new BannerAdView(this);
-        adView.setAdListener(new AdListener() {
+        adView.setAdListener(new AdListener() {  // 광고 수신 리스너 설정
+
             @Override
             public void onAdLoaded() {
-                Log.d(LOGTAG, "onAdLoaded");
+                toast("Banner is loaded");
             }
 
             @Override
-            public void onAdFailed(int code) {
-                Log.d(LOGTAG, "onAdFailed " + code);
+            public void onAdFailed(int errorCode) {
+                toast("Failed to load banner :: errorCode = " + errorCode);
             }
 
             @Override
             public void onAdClicked() {
-                Log.d(LOGTAG, "onAdClicked");
+                toast("Banner is clicked");
             }
+
         });
 
         // 할당 받은 clientId 설정
         adView.setClientId("DAN-qdqhj88gdyy8");
-
-        // 광고 갱신 시간 : 기본 60초
-        // 0 으로 설정할 경우, 갱신하지 않음.
-        adView.setRequestInterval(30);
-
-        // 광고 사이즈 설정
-        adView.setAdUnitSize("320x50");
 
         // 광고 불러오기
         adView.loadAd();

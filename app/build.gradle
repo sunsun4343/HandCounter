@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "ts.util.handcounter"
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 9
-        versionName "1.9"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 10
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -19,8 +19,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:support-media-compat:28.0.0'
+    implementation 'com.android.support:animated-vector-drawable:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation(name:'AdfitSDK-3.0.5', ext:'aar')
-    implementation "com.google.android.gms:play-services-ads-identifier:15.+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.android.gms:play-services-ads-identifier:$play_service_version"
+    implementation "com.kakao.adfit:ads-base:$adfit_version"
 }
